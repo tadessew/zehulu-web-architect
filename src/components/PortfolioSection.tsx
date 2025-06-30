@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -24,6 +25,7 @@ interface PortfolioSectionProps {
 
 const PortfolioSection = ({ t }: PortfolioSectionProps) => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const projects: PortfolioProject[] = [
     {
@@ -147,6 +149,7 @@ const PortfolioSection = ({ t }: PortfolioSectionProps) => {
                       <Button 
                         variant="outline" 
                         className="w-full bg-white/20 border-white/30 text-white hover:bg-white/30"
+                        onClick={() => navigate(`/portfolio/${project.id}`)}
                       >
                         {t.viewProject}
                       </Button>

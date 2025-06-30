@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +23,7 @@ interface ProductsShowroomProps {
 
 const ProductsShowroom = ({ t }: ProductsShowroomProps) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const navigate = useNavigate();
 
   const products: Product[] = [
     {
@@ -163,7 +165,11 @@ const ProductsShowroom = ({ t }: ProductsShowroomProps) => {
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1"
+                    onClick={() => navigate(`/product/${product.id}`)}
+                  >
                     {t.viewDetails}
                   </Button>
                   <Button className="flex-1 bg-gradient-to-r from-amber-500 to-orange-600">

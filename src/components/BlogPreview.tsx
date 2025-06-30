@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -23,6 +24,8 @@ interface BlogPreviewProps {
 }
 
 const BlogPreview = ({ t }: BlogPreviewProps) => {
+  const navigate = useNavigate();
+
   const blogPosts: BlogPost[] = [
     {
       id: 1,
@@ -112,7 +115,11 @@ const BlogPreview = ({ t }: BlogPreviewProps) => {
                   </div>
                 </div>
                 
-                <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <Button 
+                  variant="outline" 
+                  className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  onClick={() => navigate(`/blog/${post.id}`)}
+                >
                   {t.readMore}
                 </Button>
               </CardContent>
