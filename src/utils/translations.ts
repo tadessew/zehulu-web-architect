@@ -1,131 +1,140 @@
-
 export const translations = {
   am: {
-    // Header
+    // Navigation
     home: "ቤት",
     products: "ምርቶች",
-    portfolio: "የተጠናቀቁ ስራዎች",
+    portfolio: "ስራዎች",
     blog: "ብሎግ",
     contact: "ያግኙን",
-    estimator: "የዋጋ ግምት",
-    search: "ይፈልጉ...",
+    about: "ስለ እኛ",
     
     // Hero Section
-    heroTitle: "የዘሁሉ ቤት እቃዎች እና ፊኒሺንግ",
-    heroSubtitle: "ለቤትዎ ምቹ እና ማራኪ የቤት እቃዎች እና ሙያዊ የፊኒሺንግ አገልግሎቶች",
-    heroButton: "ምርቶቻችንን ይመልከቱ",
+    heroTitle: "የኢትዮጵያ ቅርጻ ቅርጽ እና የቤት ዕቃዎች",
+    heroSubtitle: "ባህላዊ የእንጨት ስራ ዕደ ጥበብን በዘመናዊ ዲዛይን እናዋህዳለን",
+    heroButton: "ምርቶችን ይመልከቱ",
     
-    // Products
-    productsTitle: "የምርቶች ማሳያ",
-    productsSubtitle: "ከቤት እቃዎች እስከ ፊኒሺንግ አገልግሎቶች ድረስ ያለንን ሙሉ ምርት ይመልከቱ",
+    // Products Section
+    productsTitle: "የእኛ ምርቶች",
+    productsSubtitle: "ከባህላዊ የእንጨት ስራ የተሰሩ ዘመናዊ የቤት ዕቃዎች",
     viewDetails: "ዝርዝር ይመልከቱ",
-    inquireProduct: "ይህን ምርት ይጠይቁ",
+    addToCart: "ወደ ጋሪ ጨምር",
     
-    // Portfolio
-    portfolioTitle: "የተጠናቀቁ ስራዎች",
-    portfolioSubtitle: "የደንበኞቻችንን በተለያዩ ስፍራዎች ያደረግነውን ተሞክሮ ይመልከቱ",
-    beforeAfter: "በፊት እና በኋላ",
-    viewProject: "ፕሮጀክት ይመልከቱ",
+    // Portfolio Section
+    portfolioTitle: "የኛ ስራዎች",
+    portfolioSubtitle: "የተለያዩ የቤት ዕቃዎች እና የቤት ማስጌት ፕሮጀክቶች",
+    beforeAfter: "ከዚህ በፊት እና ከዛ በኋላ ያነፃፅሩ",
+    viewProject: "ፕሮጀክቱን ይመልከቱ",
     
-    // Estimator
-    estimatorTitle: "የዋጋ ግምት ማስያ",
-    estimatorSubtitle: "ለአገልግሎታችን የዋጋ ግምት ያግኙ",
-    serviceType: "የአገልግሎት አይነት",
-    roomSize: "የክፍል መጠን",
-    finishType: "የፊኒሺንግ አይነት",
-    calculate: "ግምት ያስሉ",
-    estimatedPrice: "የተገመተ ዋጋ",
+    // Blog Section
+    blogTitle: "ብሎግ እና ዜናዎች",
+    blogSubtitle: "የቤት ማስጌት ምክሮች እና የእኛ የቅርብ ጊዜ ፕሮጀክቶች",
+    readMore: "ተጨማሪ ያንብቡ",
     
-    // Blog
-    blogTitle: "የቅርብ ጊዜ ዜና እና ምክሮች",
-    blogSubtitle: "ስለ ቤት እቃዎች እና ፊኒሺንግ ጠቃሚ መረጃዎችን ያግኙ",
-    readMore: "የበለጠ ያንብቡ",
-    publishedOn: "የታተመ በ",
-    
-    // Contact
+    // Contact Section
     contactTitle: "ያግኙን",
-    contactSubtitle: "ለማንኛውም ጥያቄ ወይም አገልግሎት እንወያይ",
+    contactSubtitle: "ለእርስዎ ፕሮጀክት ዛሬ ያግኙን",
     name: "ስም",
-    email: "ኢሜል",
-    message: "መልዕክት",
-    send: "ላክ",
+    email: "ኢሜይል",
     phone: "ስልክ",
-    address: "አድራሻ",
+    message: "መልእክት",
+    sendMessage: "መልእክት ላክ",
+    
+    // Estimator Section
+    estimatorTitle: "የዋጋ ግምት ያግኙ",
+    estimatorSubtitle: "ለእርስዎ ፕሮጀክት ነፃ ግምት ያግኙ",
+    roomType: "የክፍል አይነት",
+    roomSize: "የክፍል መጠን",
+    budget: "በጀት",
+    getEstimate: "ግምት ያግኙ",
     
     // Footer
-    aboutUs: "ስለ እኛ",
-    services: "አገልግሎቶች",
+    footerDescription: "የኢትዮጵያ ባህላዊ የእንጨት ስራ ዕደ ጥበብን በዘመናዊ ዲዛይን እናዋህዳለን",
+    quickLinks: "ፈጣን አገናኞች",
     followUs: "ይከተሉን",
     allRightsReserved: "ሁሉም መብቶች የተጠበቁ ናቸው",
     
     // Common
-    loading: "እየጫነ...",
+    loading: "በመጫን ላይ...",
     error: "ስህተት ተከስቷል",
-    success: "በተሳካ ሁኔታ ተልኳል",
-    close: "ዝጋ"
+    tryAgain: "እንደገና ይሞክሩ",
+    close: "ዝጋ",
+    
+    // New portfolio strings
+    searchPortfolio: "ፖርትፎሊዮ ይፈልጉ...",
+    filters: "ማጣሪያዎች",
+    allCategories: "ሁሉም",
+    resultsFound: "ውጤቶች ተገኝተዋል",
+    noResults: "ምንም ውጤት አልተገኘም",
+    tryDifferentSearch: "የተለያዩ ፍለጋ ወይም ማጣሪያዎች ይሞክሩ",
+    clearFilters: "ማጣሪያዎችን አፅዳ"
   },
   en: {
-    // Header
+    // Navigation
     home: "Home",
     products: "Products",
     portfolio: "Portfolio",
     blog: "Blog",
     contact: "Contact",
-    estimator: "Estimator",
-    search: "Search...",
+    about: "About",
     
     // Hero Section
-    heroTitle: "Zehulu Furniture & Finishing",
-    heroSubtitle: "Quality furniture and professional finishing services for your home",
-    heroButton: "View Our Products",
+    heroTitle: "Ethiopian Craftsmanship & Furniture",
+    heroSubtitle: "We blend traditional wooden craftsmanship with modern design",
+    heroButton: "View Products",
     
-    // Products
-    productsTitle: "Products Showroom",
-    productsSubtitle: "Explore our complete range from furniture to finishing services",
+    // Products Section
+    productsTitle: "Our Products",
+    productsSubtitle: "Modern furniture crafted from traditional woodwork",
     viewDetails: "View Details",
-    inquireProduct: "Inquire About This Product",
+    addToCart: "Add to Cart",
     
-    // Portfolio
-    portfolioTitle: "Completed Projects",
-    portfolioSubtitle: "See our experience with customers in various locations",
-    beforeAfter: "Before & After",
+    // Portfolio Section
+    portfolioTitle: "Our Work",
+    portfolioSubtitle: "Diverse furniture and home decoration projects",
+    beforeAfter: "Compare before and after",
     viewProject: "View Project",
     
-    // Estimator
-    estimatorTitle: "Price Estimator",
-    estimatorSubtitle: "Get a price estimate for our services",
-    serviceType: "Service Type",
-    roomSize: "Room Size",
-    finishType: "Finish Type",
-    calculate: "Calculate Estimate",
-    estimatedPrice: "Estimated Price",
-    
-    // Blog
-    blogTitle: "Latest News & Tips",
-    blogSubtitle: "Get useful information about furniture and finishing",
+    // Blog Section
+    blogTitle: "Blog & News",
+    blogSubtitle: "Home decoration tips and our latest projects",
     readMore: "Read More",
-    publishedOn: "Published on",
     
-    // Contact
+    // Contact Section
     contactTitle: "Contact Us",
-    contactSubtitle: "Let's discuss any questions or services",
+    contactSubtitle: "Get in touch with us today for your project",
     name: "Name",
     email: "Email",
-    message: "Message",
-    send: "Send",
     phone: "Phone",
-    address: "Address",
+    message: "Message",
+    sendMessage: "Send Message",
+    
+    // Estimator Section
+    estimatorTitle: "Get Price Estimate",
+    estimatorSubtitle: "Get a free estimate for your project",
+    roomType: "Room Type",
+    roomSize: "Room Size",
+    budget: "Budget",
+    getEstimate: "Get Estimate",
     
     // Footer
-    aboutUs: "About Us",
-    services: "Services",
+    footerDescription: "We blend traditional Ethiopian wooden craftsmanship with modern design",
+    quickLinks: "Quick Links",
     followUs: "Follow Us",
     allRightsReserved: "All rights reserved",
     
     // Common
     loading: "Loading...",
     error: "An error occurred",
-    success: "Successfully sent",
-    close: "Close"
+    tryAgain: "Try Again",
+    close: "Close",
+    
+    // New portfolio strings
+    searchPortfolio: "Search portfolio...",
+    filters: "Filters",
+    allCategories: "All",
+    resultsFound: "results found",
+    noResults: "No results found",
+    tryDifferentSearch: "Try adjusting your search or filters",
+    clearFilters: "Clear Filters"
   }
 };
