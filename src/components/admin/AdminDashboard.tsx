@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -7,49 +8,83 @@ import {
   FileText, 
   Eye,
   TrendingUp,
-  Calendar
+  Calendar,
+  Loader2
 } from 'lucide-react';
-
-const stats = [
-  {
-    title: 'Total Portfolio Items',
-    value: '24',
-    change: '+12%',
-    icon: Image,
-    trend: 'up'
-  },
-  {
-    title: 'Total Users',
-    value: '1,234',
-    change: '+5%',
-    icon: Users,
-    trend: 'up'
-  },
-  {
-    title: 'Blog Posts',
-    value: '48',
-    change: '+8%',
-    icon: FileText,
-    trend: 'up'
-  },
-  {
-    title: 'Page Views',
-    value: '12,345',
-    change: '+15%',
-    icon: Eye,
-    trend: 'up'
-  }
-];
-
-const recentActivity = [
-  { action: 'New portfolio item added', time: '2 hours ago', type: 'portfolio' },
-  { action: 'User registered', time: '4 hours ago', type: 'user' },
-  { action: 'Blog post published', time: '1 day ago', type: 'content' },
-  { action: 'Portfolio item updated', time: '2 days ago', type: 'portfolio' },
-  { action: 'New inquiry received', time: '3 days ago', type: 'inquiry' },
-];
+import { api } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
 
 export const AdminDashboard = () => {
+  const [stats, setStats] = useState<any[]>([]);
+  const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await api.getDashboardStats();
+      setStats([
+        {
+          title: 'Total Portfolio Items',
+          value: data.portfolioCount?.toString() || '0',
+          change: data.portfolioChange || '+0%',
+          icon: Image,
+          trend: 'up'
+        },
+        {
+          title: 'Total Users',
+          value: data.userCount?.toString() || '0',
+          change: data.userChange || '+0%',
+          icon: Users,
+          trend: 'up'
+        },
+        {
+          title: 'Blog Posts',
+          value: data.blogCount?.toString() || '0',
+          change: data.blogChange || '+0%',
+          icon: FileText,
+          trend: 'up'
+        },
+        {
+          title: 'Page Views',
+          value: data.pageViews?.toString() || '0',
+          change: data.viewsChange || '+0%',
+          icon: Eye,
+          trend: 'up'
+        }
+      ]);
+      setRecentActivity(data.recentActivity || []);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to load dashboard data",
+        variant: "destructive",
+      });
+      // Fallback to empty data
+      setStats([
+        { title: 'Total Portfolio Items', value: '0', change: '+0%', icon: Image, trend: 'up' },
+        { title: 'Total Users', value: '0', change: '+0%', icon: Users, trend: 'up' },
+        { title: 'Blog Posts', value: '0', change: '+0%', icon: FileText, trend: 'up' },
+        { title: 'Page Views', value: '0', change: '+0%', icon: Eye, trend: 'up' }
+      ]);
+      setRecentActivity([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>

@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Table,
   TableBody,
@@ -18,14 +19,70 @@ import {
   Edit, 
   Trash2, 
   Eye,
-  Filter
+  Filter,
+  Loader2
 } from 'lucide-react';
-import { usePortfolio } from '@/hooks/usePortfolio';
+import { api } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
+import { PortfolioForm } from './forms/PortfolioForm';
 
 export const PortfolioManagement = () => {
+  const [projects, setProjects] = useState<any[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const { projects, categories, isLoading } = usePortfolio();
+  const [isLoading, setIsLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingProject, setEditingProject] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    loadPortfolio();
+  }, []);
+
+  const loadPortfolio = async () => {
+    try {
+      setIsLoading(true);
+      const data = await api.getPortfolioItems();
+      setProjects(data);
+      // Extract unique categories
+      const uniqueCategories = [...new Set(data.map((item: any) => item.categoryEn).filter(Boolean))];
+      setCategories(uniqueCategories);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to load portfolio items",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this portfolio item?')) return;
+    
+    try {
+      await api.deletePortfolioItem(id);
+      setProjects(projects.filter(project => project.id !== id));
+      toast({
+        title: "Success",
+        description: "Portfolio item deleted successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete portfolio item",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFormSuccess = () => {
+    setShowForm(false);
+    setEditingProject(null);
+    loadPortfolio();
+  };
 
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.titleEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,10 +106,21 @@ export const PortfolioManagement = () => {
           <h1 className="text-3xl font-bold">Portfolio Management</h1>
           <p className="text-gray-600">Manage your portfolio items and projects</p>
         </div>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Add New Project
-        </Button>
+        <Dialog open={showForm} onOpenChange={setShowForm}>
+          <DialogTrigger asChild>
+            <Button onClick={() => setEditingProject(null)}>
+              <Plus className="w-4 h-4 mr-2" />
+              Add New Project
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <PortfolioForm 
+              portfolioId={editingProject || undefined}
+              onSuccess={handleFormSuccess}
+              onCancel={() => setShowForm(false)}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Filters */}
@@ -140,10 +208,21 @@ export const PortfolioManagement = () => {
                       <Button variant="ghost" size="sm">
                         <Eye className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => {
+                          setEditingProject(project.id);
+                          setShowForm(true);
+                        }}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleDelete(project.id)}
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>

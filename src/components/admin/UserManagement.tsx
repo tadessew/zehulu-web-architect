@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Table,
   TableBody,
@@ -18,41 +19,68 @@ import {
   Edit, 
   Trash2, 
   Mail,
-  Shield
+  Shield,
+  Loader2
 } from 'lucide-react';
-
-const mockUsers = [
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    role: 'admin',
-    status: 'active',
-    lastLogin: '2024-01-15'
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    role: 'editor',
-    status: 'active',
-    lastLogin: '2024-01-14'
-  },
-  {
-    id: 3,
-    name: 'Bob Johnson',
-    email: 'bob@example.com',
-    role: 'viewer',
-    status: 'inactive',
-    lastLogin: '2024-01-10'
-  }
-];
+import { api } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
+import { UserForm } from './forms/UserForm';
 
 export const UserManagement = () => {
+  const [users, setUsers] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingUser, setEditingUser] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  const filteredUsers = mockUsers.filter(user => {
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      setIsLoading(true);
+      const data = await api.getUsers();
+      setUsers(data);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to load users",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this user?')) return;
+    
+    try {
+      await api.deleteUser(id);
+      setUsers(users.filter(user => user.id !== id));
+      toast({
+        title: "Success",
+        description: "User deleted successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete user",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFormSuccess = () => {
+    setShowForm(false);
+    setEditingUser(null);
+    loadUsers();
+  };
+
+  const filteredUsers = users.filter(user => {
     const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = roleFilter === 'all' || user.role === roleFilter;
@@ -66,10 +94,21 @@ export const UserManagement = () => {
           <h1 className="text-3xl font-bold">User Management</h1>
           <p className="text-gray-600">Manage user accounts and permissions</p>
         </div>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Add User
-        </Button>
+        <Dialog open={showForm} onOpenChange={setShowForm}>
+          <DialogTrigger asChild>
+            <Button onClick={() => setEditingUser(null)}>
+              <Plus className="w-4 h-4 mr-2" />
+              Add User
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <UserForm 
+              userId={editingUser || undefined}
+              onSuccess={handleFormSuccess}
+              onCancel={() => setShowForm(false)}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Filters */}
@@ -130,6 +169,11 @@ export const UserManagement = () => {
           <CardTitle>Users ({filteredUsers.length})</CardTitle>
         </CardHeader>
         <CardContent>
+          {isLoading ? (
+            <div className="flex items-center justify-center p-8">
+              <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+          ) : (
           <Table>
             <TableHeader>
               <TableRow>
@@ -166,10 +210,21 @@ export const UserManagement = () => {
                       <Button variant="ghost" size="sm">
                         <Mail className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => {
+                          setEditingUser(user.id);
+                          setShowForm(true);
+                        }}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleDelete(user.id)}
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -178,6 +233,7 @@ export const UserManagement = () => {
               ))}
             </TableBody>
           </Table>
+          )}
         </CardContent>
       </Card>
     </div>

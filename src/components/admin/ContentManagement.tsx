@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Table,
   TableBody,
@@ -18,41 +19,68 @@ import {
   Edit, 
   Trash2, 
   Eye,
-  Calendar
+  Calendar,
+  Loader2
 } from 'lucide-react';
-
-const mockPosts = [
-  {
-    id: 1,
-    title: 'Modern Kitchen Design Trends 2024',
-    status: 'published',
-    author: 'Admin',
-    date: '2024-01-15',
-    views: 1250
-  },
-  {
-    id: 2,
-    title: 'Bedroom Renovation Tips',
-    status: 'draft',
-    author: 'Admin',
-    date: '2024-01-12',
-    views: 0
-  },
-  {
-    id: 3,
-    title: 'Living Room Makeover Ideas',
-    status: 'published',
-    author: 'Admin',
-    date: '2024-01-10',
-    views: 890
-  }
-];
+import { api } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
+import { BlogForm } from './forms/BlogForm';
 
 export const ContentManagement = () => {
+  const [posts, setPosts] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingPost, setEditingPost] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  const filteredPosts = mockPosts.filter(post => {
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const loadPosts = async () => {
+    try {
+      setIsLoading(true);
+      const data = await api.getBlogPosts();
+      setPosts(data);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to load blog posts",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    
+    try {
+      await api.deleteBlogPost(id);
+      setPosts(posts.filter(post => post.id !== id));
+      toast({
+        title: "Success",
+        description: "Blog post deleted successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete blog post",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFormSuccess = () => {
+    setShowForm(false);
+    setEditingPost(null);
+    loadPosts();
+  };
+
+  const filteredPosts = posts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || post.status === statusFilter;
     return matchesSearch && matchesStatus;
@@ -65,10 +93,21 @@ export const ContentManagement = () => {
           <h1 className="text-3xl font-bold">Content Management</h1>
           <p className="text-gray-600">Manage blog posts and content</p>
         </div>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          New Post
-        </Button>
+        <Dialog open={showForm} onOpenChange={setShowForm}>
+          <DialogTrigger asChild>
+            <Button onClick={() => setEditingPost(null)}>
+              <Plus className="w-4 h-4 mr-2" />
+              New Post
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <BlogForm 
+              blogId={editingPost || undefined}
+              onSuccess={handleFormSuccess}
+              onCancel={() => setShowForm(false)}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Filters */}
@@ -122,6 +161,11 @@ export const ContentManagement = () => {
           <CardTitle>Posts ({filteredPosts.length})</CardTitle>
         </CardHeader>
         <CardContent>
+          {isLoading ? (
+            <div className="flex items-center justify-center p-8">
+              <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+          ) : (
           <Table>
             <TableHeader>
               <TableRow>
@@ -157,10 +201,21 @@ export const ContentManagement = () => {
                       <Button variant="ghost" size="sm">
                         <Eye className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => {
+                          setEditingPost(post.id);
+                          setShowForm(true);
+                        }}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleDelete(post.id)}
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -169,6 +224,7 @@ export const ContentManagement = () => {
               ))}
             </TableBody>
           </Table>
+          )}
         </CardContent>
       </Card>
     </div>
