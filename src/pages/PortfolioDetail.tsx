@@ -301,35 +301,35 @@ const PortfolioDetail = () => {
           </div>
         </div>
 
-        {/* Social Media Contact Section */}
+        {/* Compact Social Media Contact Section */}
         <div className="mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-            {currentLanguage === 'am' ? 'ያግኙን' : 'Get In Touch'}
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            {currentLanguage === 'am' ? 'ያግኙን' : 'Contact Us'}
           </h2>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <Card className="bg-gradient-to-br from-white/90 to-amber-50/50 dark:from-gray-900/90 dark:to-amber-950/50 backdrop-blur-sm border-2 border-amber-200/50 dark:border-amber-800/50 shadow-xl">
-              <CardContent className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Contact Info */}
-                  <div className="space-y-6">
-                    <h3 className="text-xl font-semibold mb-4 text-amber-700 dark:text-amber-300">
+              <CardContent className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Contact Info - Compact */}
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-amber-700 dark:text-amber-300 mb-3">
                       {currentLanguage === 'am' ? 'የቀጥታ ግንኙነት' : 'Direct Contact'}
                     </h3>
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3 group hover:bg-amber-50/50 dark:hover:bg-amber-950/30 p-3 rounded-lg transition-all duration-300">
-                        <Phone className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform" />
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-3 text-sm">
+                        <Phone className="w-4 h-4 text-amber-600" />
                         <div>
-                          <p className="font-medium">{currentLanguage === 'am' ? 'ስልክ' : 'Phone'}</p>
-                          <a href="tel:+251911123456" className="text-amber-600 hover:text-amber-700 transition-colors">
+                          <span className="text-muted-foreground">{currentLanguage === 'am' ? 'ስልክ' : 'Phone'}:&nbsp;</span>
+                          <a href="tel:+251911123456" className="text-amber-600 hover:text-amber-700 font-medium">
                             +251 911 123 456
                           </a>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-3 group hover:bg-amber-50/50 dark:hover:bg-amber-950/30 p-3 rounded-lg transition-all duration-300">
-                        <Mail className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform" />
+                      <div className="flex items-center space-x-3 text-sm">
+                        <Mail className="w-4 h-4 text-amber-600" />
                         <div>
-                          <p className="font-medium">{currentLanguage === 'am' ? 'ኢሜይል' : 'Email'}</p>
-                          <a href="mailto:contact@yourdesign.et" className="text-amber-600 hover:text-amber-700 transition-colors">
+                          <span className="text-muted-foreground">{currentLanguage === 'am' ? 'ኢሜይል' : 'Email'}:&nbsp;</span>
+                          <a href="mailto:contact@yourdesign.et" className="text-amber-600 hover:text-amber-700 font-medium">
                             contact@yourdesign.et
                           </a>
                         </div>
@@ -337,35 +337,35 @@ const PortfolioDetail = () => {
                     </div>
                   </div>
 
-                  {/* Social Media */}
-                  <div className="space-y-6">
-                    <h3 className="text-xl font-semibold mb-4 text-amber-700 dark:text-amber-300">
-                      {currentLanguage === 'am' ? 'ማህበራዊ ሚዲያ' : 'Follow Us'}
+                  {/* Social Media - Compact Grid */}
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-amber-700 dark:text-amber-300 mb-3">
+                      {currentLanguage === 'am' ? 'ማህበራዊ ሚዲያ' : 'Social Media'}
                     </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-5 gap-2">
                       {[
-                        { icon: Facebook, name: 'Facebook', url: 'https://facebook.com/yourdesign', color: 'hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/30' },
-                        { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/yourdesign', color: 'hover:bg-pink-50 hover:text-pink-600 dark:hover:bg-pink-950/30' },
-                        { icon: Linkedin, name: 'LinkedIn', url: 'https://linkedin.com/company/yourdesign', color: 'hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950/30' },
-                        { icon: Twitter, name: 'Twitter', url: 'https://twitter.com/yourdesign', color: 'hover:bg-sky-50 hover:text-sky-600 dark:hover:bg-sky-950/30' },
-                        { icon: Youtube, name: 'YouTube', url: 'https://youtube.com/@yourdesign', color: 'hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30' },
+                        { icon: Facebook, name: 'Facebook', url: 'https://facebook.com/yourdesign' },
+                        { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/yourdesign' },
+                        { icon: Linkedin, name: 'LinkedIn', url: 'https://linkedin.com/company/yourdesign' },
+                        { icon: Twitter, name: 'Twitter', url: 'https://twitter.com/yourdesign' },
+                        { icon: Youtube, name: 'YouTube', url: 'https://youtube.com/@yourdesign' },
                       ].map((social, index) => (
                         <a
                           key={index}
                           href={social.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`flex flex-col items-center p-4 rounded-xl border border-amber-200/50 dark:border-amber-800/50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${social.color}`}
+                          className="flex items-center justify-center w-10 h-10 rounded-lg border border-amber-200/50 dark:border-amber-800/50 transition-all duration-300 hover:scale-110 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:border-amber-300"
+                          title={social.name}
                         >
-                          <social.icon className="w-6 h-6 mb-2 transition-transform duration-300 hover:scale-110" />
-                          <span className="text-sm font-medium">{social.name}</span>
+                          <social.icon className="w-5 h-5 text-amber-600 hover:text-amber-700" />
                         </a>
                       ))}
                     </div>
-                    <p className="text-center text-muted-foreground text-sm mt-4">
+                    <p className="text-xs text-muted-foreground mt-2">
                       {currentLanguage === 'am' 
-                        ? 'የእኛን የቅርብ ፕሮጀክቶች እና ፈጠራ ሃሳቦች ይከታተሉ'
-                        : 'Follow us for our latest projects and design inspiration'
+                        ? 'የእኛን የቅርብ ፕሮጀክቶች ይከታተሉ'
+                        : 'Follow for latest projects'
                       }
                     </p>
                   </div>
