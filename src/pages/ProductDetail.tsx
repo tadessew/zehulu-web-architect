@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { translations } from '@/utils/translations';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 // Mock product data - in a real app this would come from an API
 const products = [
@@ -105,10 +106,11 @@ const ProductDetail = () => {
           {/* Images */}
           <div className="space-y-4">
             <div className="aspect-square rounded-lg overflow-hidden">
-              <img
+              <OptimizedImage
                 src={product.images[selectedImage]}
                 alt={currentLanguage === 'am' ? product.name : product.nameEn}
                 className="w-full h-full object-cover"
+                priority={true}
               />
             </div>
             <div className="grid grid-cols-4 gap-2">
@@ -120,7 +122,7 @@ const ProductDetail = () => {
                     selectedImage === index ? 'border-primary' : 'border-transparent'
                   }`}
                 >
-                  <img
+                  <OptimizedImage
                     src={image}
                     alt={`View ${index + 1}`}
                     className="w-full h-full object-cover"

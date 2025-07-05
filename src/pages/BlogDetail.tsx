@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { translations } from '@/utils/translations';
 import { useState } from 'react';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 // Mock blog data
 const blogs = [
@@ -141,10 +142,11 @@ const BlogDetail = () => {
 
       {/* Hero Image */}
       <div className="aspect-video relative overflow-hidden">
-        <img
+        <OptimizedImage
           src={blog.image}
           alt={currentLanguage === 'am' ? blog.title : blog.titleEn}
           className="w-full h-full object-cover"
+          priority={true}
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
@@ -218,7 +220,7 @@ const BlogDetail = () => {
                 <Card key={relatedBlog.id} className="cursor-pointer hover:shadow-lg transition-shadow"
                       onClick={() => navigate(`/blog/${relatedBlog.id}`)}>
                   <div className="aspect-video relative overflow-hidden rounded-t-lg">
-                    <img
+                    <OptimizedImage
                       src={relatedBlog.image}
                       alt={currentLanguage === 'am' ? relatedBlog.title : relatedBlog.titleEn}
                       className="w-full h-full object-cover"

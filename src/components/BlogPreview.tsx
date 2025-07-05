@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User } from 'lucide-react';
 import { translations } from '@/utils/translations';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface BlogPost {
   id: number;
@@ -84,7 +85,7 @@ const BlogPreview = ({ t }: BlogPreviewProps) => {
           {blogPosts.map((post) => (
             <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative overflow-hidden rounded-t-lg">
-                <img
+                <OptimizedImage
                   src={post.image}
                   alt={t === translations?.am ? post.title : post.titleEn}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"

@@ -25,6 +25,7 @@ import {
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { PortfolioForm } from './forms/PortfolioForm';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 export const PortfolioManagement = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -185,7 +186,7 @@ export const PortfolioManagement = () => {
                 <TableRow key={project.id}>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <img
+                      <OptimizedImage
                         src={project.afterImage}
                         alt={project.titleEn}
                         className="w-12 h-12 rounded-lg object-cover"

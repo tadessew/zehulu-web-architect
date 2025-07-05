@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { translations } from '@/utils/translations';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface Product {
   id: number;
@@ -170,7 +171,7 @@ const ProductsShowroom = ({ t }: ProductsShowroomProps) => {
                   hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
                 }`}></div>
                 
-                <img
+                <OptimizedImage
                   src={product.image}
                   alt={t === translations?.am ? product.name : product.nameEn}
                   className={`w-full h-full object-cover transition-all duration-700 transform-gpu ${
@@ -178,11 +179,6 @@ const ProductsShowroom = ({ t }: ProductsShowroomProps) => {
                       ? 'scale-110 brightness-110 saturate-110' 
                       : 'scale-100'
                   }`}
-                  style={{
-                    filter: hoveredProduct === product.id 
-                      ? 'brightness(1.1) saturate(1.2) contrast(1.1)' 
-                      : 'brightness(1) saturate(1) contrast(1)'
-                  }}
                 />
                 
                 {/* Floating Badge */}
