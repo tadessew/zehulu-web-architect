@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, MapPin, Users } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Users, Facebook, Instagram, Linkedin, Twitter, Youtube, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 import { translations } from '@/utils/translations';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 
 // Mock portfolio data
 const portfolios = [
@@ -236,14 +237,18 @@ const PortfolioDetail = () => {
                 opacity: showBefore ? 0.3 : 0.1
               }}
             />
-            <img
-              src={showBefore ? portfolio.beforeImage : portfolio.afterImage}
-              alt={showBefore ? "Before" : "After"}
-              className="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105"
+            <div 
+              className="w-full h-full transition-all duration-1000 transform group-hover:scale-105"
               style={{
                 filter: `brightness(${showBefore ? '0.9' : '1.1'}) saturate(${showBefore ? '0.8' : '1.2'}) contrast(${showBefore ? '0.9' : '1.1'})`
               }}
-            />
+            >
+              <OptimizedImage
+                src={showBefore ? portfolio.beforeImage : portfolio.afterImage}
+                alt={showBefore ? "Before" : "After"}
+                className="w-full h-full object-cover"
+              />
+            </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <Button
                 onClick={() => setShowBefore(!showBefore)}
@@ -280,7 +285,7 @@ const PortfolioDetail = () => {
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                <img
+                <OptimizedImage
                   src={image}
                   alt={`Project image ${index + 1}`}
                   className="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
@@ -296,6 +301,80 @@ const PortfolioDetail = () => {
           </div>
         </div>
 
+        {/* Social Media Contact Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            {currentLanguage === 'am' ? 'ያግኙን' : 'Get In Touch'}
+          </h2>
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-gradient-to-br from-white/90 to-amber-50/50 dark:from-gray-900/90 dark:to-amber-950/50 backdrop-blur-sm border-2 border-amber-200/50 dark:border-amber-800/50 shadow-xl">
+              <CardContent className="p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Contact Info */}
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-semibold mb-4 text-amber-700 dark:text-amber-300">
+                      {currentLanguage === 'am' ? 'የቀጥታ ግንኙነት' : 'Direct Contact'}
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-3 group hover:bg-amber-50/50 dark:hover:bg-amber-950/30 p-3 rounded-lg transition-all duration-300">
+                        <Phone className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform" />
+                        <div>
+                          <p className="font-medium">{currentLanguage === 'am' ? 'ስልክ' : 'Phone'}</p>
+                          <a href="tel:+251911123456" className="text-amber-600 hover:text-amber-700 transition-colors">
+                            +251 911 123 456
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3 group hover:bg-amber-50/50 dark:hover:bg-amber-950/30 p-3 rounded-lg transition-all duration-300">
+                        <Mail className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform" />
+                        <div>
+                          <p className="font-medium">{currentLanguage === 'am' ? 'ኢሜይል' : 'Email'}</p>
+                          <a href="mailto:contact@yourdesign.et" className="text-amber-600 hover:text-amber-700 transition-colors">
+                            contact@yourdesign.et
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Social Media */}
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-semibold mb-4 text-amber-700 dark:text-amber-300">
+                      {currentLanguage === 'am' ? 'ማህበራዊ ሚዲያ' : 'Follow Us'}
+                    </h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      {[
+                        { icon: Facebook, name: 'Facebook', url: 'https://facebook.com/yourdesign', color: 'hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/30' },
+                        { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/yourdesign', color: 'hover:bg-pink-50 hover:text-pink-600 dark:hover:bg-pink-950/30' },
+                        { icon: Linkedin, name: 'LinkedIn', url: 'https://linkedin.com/company/yourdesign', color: 'hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950/30' },
+                        { icon: Twitter, name: 'Twitter', url: 'https://twitter.com/yourdesign', color: 'hover:bg-sky-50 hover:text-sky-600 dark:hover:bg-sky-950/30' },
+                        { icon: Youtube, name: 'YouTube', url: 'https://youtube.com/@yourdesign', color: 'hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30' },
+                      ].map((social, index) => (
+                        <a
+                          key={index}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex flex-col items-center p-4 rounded-xl border border-amber-200/50 dark:border-amber-800/50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${social.color}`}
+                        >
+                          <social.icon className="w-6 h-6 mb-2 transition-transform duration-300 hover:scale-110" />
+                          <span className="text-sm font-medium">{social.name}</span>
+                        </a>
+                      ))}
+                    </div>
+                    <p className="text-center text-muted-foreground text-sm mt-4">
+                      {currentLanguage === 'am' 
+                        ? 'የእኛን የቅርብ ፕሮጀክቶች እና ፈጠራ ሃሳቦች ይከታተሉ'
+                        : 'Follow us for our latest projects and design inspiration'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
         {/* Enhanced CTA Section with 3D Effects */}
         <div className="text-center relative">
           <div 
@@ -306,7 +385,7 @@ const PortfolioDetail = () => {
           />
           <div className="relative z-10 py-12 px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-              {currentLanguage === 'am' ? 'ተመሳሳይ ፕሮጀክት ይፈልጋሉ?' : 'Looking for a Similar Project?'}
+              {currentLanguage === 'am' ? 'ተመሳሳይ ፕሮጀክት ይፈልጋሉ?' : 'Ready to Start Your Project?'}
             </h2>
             <p className="text-muted-foreground mb-6 text-lg">
               {currentLanguage === 'am' 
@@ -314,12 +393,25 @@ const PortfolioDetail = () => {
                 : 'Contact us to create a similar transformation for your home.'
               }
             </p>
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 transform hover:scale-110 hover:rotate-1 transition-all duration-300 shadow-lg hover:shadow-xl text-lg px-8 py-4"
-            >
-              {currentLanguage === 'am' ? 'አሁን ያግኙን' : 'Contact Us Now'}
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 transform hover:scale-110 hover:rotate-1 transition-all duration-300 shadow-lg hover:shadow-xl text-lg px-8 py-4"
+                onClick={() => window.open('tel:+251911123456')}
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                {currentLanguage === 'am' ? 'አሁን ይደውሉ' : 'Call Now'}
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-2 border-amber-500 text-amber-600 hover:bg-amber-50 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl text-lg px-8 py-4"
+                onClick={() => window.open('mailto:contact@yourdesign.et')}
+              >
+                <Mail className="w-5 h-5 mr-2" />
+                {currentLanguage === 'am' ? 'ኢሜይል ላክ' : 'Send Email'}
+              </Button>
+            </div>
           </div>
         </div>
       </div>
