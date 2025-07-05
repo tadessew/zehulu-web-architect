@@ -194,35 +194,141 @@ const PortfolioDetail = () => {
           </p>
         </div>
 
-        {/* Project Info Cards with 3D Hover Effects */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        {/* Minimized Project Info Cards with Materials & Cost */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {[
-            { icon: MapPin, title: currentLanguage === 'am' ? 'አካባቢ' : 'Location', value: currentLanguage === 'am' ? portfolio.location : portfolio.locationEn },
-            { icon: Calendar, title: currentLanguage === 'am' ? 'የፕሮጀክት ጊዜ' : 'Duration', value: currentLanguage === 'am' ? portfolio.duration : portfolio.durationEn },
-            { icon: Users, title: currentLanguage === 'am' ? 'ደንበኛ' : 'Client', value: currentLanguage === 'am' ? portfolio.client : portfolio.clientEn }
+            { 
+              icon: MapPin, 
+              title: currentLanguage === 'am' ? 'አካባቢ' : 'Location', 
+              value: currentLanguage === 'am' ? portfolio.location : portfolio.locationEn,
+              subtitle: currentLanguage === 'am' ? 'አዲስ አበባ አካባቢ' : 'Addis Ababa Area'
+            },
+            { 
+              icon: Calendar, 
+              title: currentLanguage === 'am' ? 'የፕሮጀክት ጊዜ' : 'Duration', 
+              value: currentLanguage === 'am' ? portfolio.duration : portfolio.durationEn,
+              subtitle: currentLanguage === 'am' ? 'ከቅዳሜ እስከ ቅዳሜ' : 'Weekend to Weekend'
+            },
+            { 
+              icon: Users, 
+              title: currentLanguage === 'am' ? 'ደንበኛ' : 'Client', 
+              value: currentLanguage === 'am' ? portfolio.client : portfolio.clientEn,
+              subtitle: currentLanguage === 'am' ? 'የቤተሰብ ቤት' : 'Family Home'
+            }
           ].map((item, index) => (
             <Card 
               key={index}
-              className="group relative overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1 hover:shadow-2xl bg-gradient-to-br from-white/90 to-amber-50/50 dark:from-gray-900/90 dark:to-amber-950/50 backdrop-blur-sm border-2 border-transparent hover:border-amber-200 dark:hover:border-amber-800"
-              style={{
-                animationDelay: `${index * 200}ms`,
-                transform: `perspective(1000px) rotateX(${mousePosition.y * 0.02}deg) rotateY(${mousePosition.x * 0.02}deg)`
-              }}
+              className="group relative overflow-hidden transition-all duration-300 hover:scale-105 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border border-amber-200/50 dark:border-amber-800/50 hover:border-amber-300 hover:shadow-lg"
             >
-              <CardContent className="p-6 text-center relative z-10">
-                <item.icon className="w-8 h-8 mx-auto mb-2 text-amber-600 group-hover:text-orange-600 transition-colors duration-300 group-hover:scale-110 transform" />
-                <h3 className="font-semibold mb-1 group-hover:text-amber-600 transition-colors duration-300">
+              <CardContent className="p-4 text-center">
+                <item.icon className="w-6 h-6 mx-auto mb-2 text-amber-600 group-hover:text-orange-600 transition-colors" />
+                <h3 className="font-semibold text-sm mb-1 text-foreground">
                   {item.title}
                 </h3>
-                <p className="text-muted-foreground group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors duration-300">
+                <p className="text-sm font-medium text-amber-600 mb-1">
                   {item.value}
                 </p>
+                <p className="text-xs text-muted-foreground">
+                  {item.subtitle}
+                </p>
               </CardContent>
-              
-              {/* 3D Shine Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12 transition-all duration-700 group-hover:translate-x-full opacity-0 group-hover:opacity-100"></div>
             </Card>
           ))}
+        </div>
+
+        {/* Materials & Cost Information */}
+        <div className="mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            {currentLanguage === 'am' ? 'የቁሳቁስ እና ወጪ መረጃ' : 'Materials & Cost Details'}
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Materials Used */}
+            <Card className="bg-gradient-to-br from-white/90 to-amber-50/50 dark:from-gray-900/90 dark:to-amber-950/50 backdrop-blur-sm border-2 border-amber-200/50 dark:border-amber-800/50">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold mb-4 text-amber-700 dark:text-amber-300">
+                  {currentLanguage === 'am' ? 'የተጠቀሙ ቁሳቁሶች' : 'Materials Used'}
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    { 
+                      name: currentLanguage === 'am' ? 'የቤት እቃዎች' : 'Furniture', 
+                      type: currentLanguage === 'am' ? 'ዘመናዊ እንጨት' : 'Modern Wood',
+                      details: currentLanguage === 'am' ? 'መልካም ጥራት ያለው እንጨት' : 'High-quality timber'
+                    },
+                    { 
+                      name: currentLanguage === 'am' ? 'የግድግዳ ቀለም' : 'Wall Paint', 
+                      type: currentLanguage === 'am' ? 'አክሪሊክ ቀለም' : 'Acrylic Paint',
+                      details: currentLanguage === 'am' ? 'ለምጭ ጤናማ ቀለም' : 'Eco-friendly premium paint'
+                    },
+                    { 
+                      name: currentLanguage === 'am' ? 'የወለል ሽፋን' : 'Flooring', 
+                      type: currentLanguage === 'am' ? 'ላሚኔት' : 'Laminate',
+                      details: currentLanguage === 'am' ? 'የውሃ መከላከያ ላሚኔት' : 'Water-resistant laminate'
+                    },
+                    { 
+                      name: currentLanguage === 'am' ? 'የአርሶ አዴ' : 'Lighting', 
+                      type: currentLanguage === 'am' ? 'LED ብርሃን' : 'LED Fixtures',
+                      details: currentLanguage === 'am' ? 'ኃይል ቆጣቢ LED' : 'Energy-efficient LED'
+                    }
+                  ].map((material, index) => (
+                    <div key={index} className="flex justify-between items-start p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{material.name}</p>
+                        <p className="text-xs text-amber-600 font-medium">{material.type}</p>
+                        <p className="text-xs text-muted-foreground">{material.details}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Cost Breakdown */}
+            <Card className="bg-gradient-to-br from-white/90 to-amber-50/50 dark:from-gray-900/90 dark:to-amber-950/50 backdrop-blur-sm border-2 border-amber-200/50 dark:border-amber-800/50">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold mb-4 text-amber-700 dark:text-amber-300">
+                  {currentLanguage === 'am' ? 'የወጪ ብልጭታ' : 'Cost Breakdown'}
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    { 
+                      item: currentLanguage === 'am' ? 'ቁሳቁስ' : 'Materials', 
+                      cost: currentLanguage === 'am' ? '45,000 ብር' : '45,000 ETB',
+                      percentage: '60%'
+                    },
+                    { 
+                      item: currentLanguage === 'am' ? 'የሰራተኛ ክፍያ' : 'Labor Cost', 
+                      cost: currentLanguage === 'am' ? '22,500 ብር' : '22,500 ETB',
+                      percentage: '30%'
+                    },
+                    { 
+                      item: currentLanguage === 'am' ? 'ዲዛይን እና ፕላን' : 'Design & Planning', 
+                      cost: currentLanguage === 'am' ? '7,500 ብር' : '7,500 ETB',
+                      percentage: '10%'
+                    }
+                  ].map((costItem, index) => (
+                    <div key={index} className="flex justify-between items-center p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{costItem.item}</p>
+                        <p className="text-xs text-muted-foreground">{costItem.percentage} of total</p>
+                      </div>
+                      <p className="font-bold text-amber-600">{costItem.cost}</p>
+                    </div>
+                  ))}
+                  <div className="border-t border-amber-200/50 pt-3 mt-3">
+                    <div className="flex justify-between items-center p-3 bg-amber-50/50 dark:bg-amber-950/30 rounded-lg">
+                      <p className="font-bold text-lg">
+                        {currentLanguage === 'am' ? 'ጠቅላላ ወጪ' : 'Total Cost'}
+                      </p>
+                      <p className="font-bold text-xl text-amber-600">
+                        {currentLanguage === 'am' ? '75,000 ብር' : '75,000 ETB'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Enhanced Before/After Comparison with 3D Effects */}
